@@ -54,8 +54,8 @@ Create a database named sqpg, then edit:
 
 📁 src/main/resources/application.properties:
 spring.datasource.url=jdbc:mysql://localhost:3306/sqpg
-spring.datasource.username=YOUR_USERNAME
-spring.datasource.password=YOUR_PASSWORD
+spring.datasource.username=Mizbataranumm
+spring.datasource.password=MiZba@0815
 
 spring.jpa.hibernate.ddl-auto=none
 spring.jpa.show-sql=true

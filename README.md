@@ -21,15 +21,15 @@ with correct **module-wise marks distribution, randomized question selection**, 
 - 🧠 External Exam Structure:
   - **5 Modules × 20 Marks = 100 Marks**
 - 🧩 Format Pattern:
-  - Each module contains **A, B, C** subquestions
-  - Marks pattern → **7 + 8 + 5 = 20**
+  - Each module contains **A, B, C** sub-questions  
+  - Marks = **7 + 8 + 5 = 20**
 - 🔀 Random Set Selection (Set-1 / Set-2)
-- 🖨 Print Friendly Output
-- 📱 Responsive & Easy-to-Use UI
+- 🖨 Print-friendly output
+- 📱 Responsive UI
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠 Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -47,7 +47,7 @@ with correct **module-wise marks distribution, randomized question selection**, 
 ```sh
 git clone https://github.com/Mizbataranumm/smartqpg.git
 cd smartqpg
----
+```
 
 ### 2️⃣ Configure MySQL
 
@@ -65,68 +65,32 @@ spring.jpa.show-sql=true
 
 server.port=8080
 server.address=0.0.0.0
-🗃️ Database Requirements
+```
 
-Your questions table must include the following columns:
+⚠️ Never upload real passwords to GitHub.
 
-question_id  
-subject_id  
-chapter_id  
-question_text  
-difficulty  
-marks  
-question_type  
-subject_code  
-module_no  
-part  
-set_no  
+---
 
+### 🗃️ Database Requirements
 
-Minimum recommended question count per subject:
+Your `questions` table must include:
 
-5 modules × 2 sets × 3 parts (A, B, C) = 30 questions
+```
+question_id
+subject_id
+chapter_id
+question_text
+difficulty
+marks
+question_type
+subject_code
+module_no
+part
+set_no
+```
 
-▶️ Running the Application
+Minimum recommended:
 
-Start the Spring Boot server using:
-
-mvn spring-boot:run
-
-
-Once the application is running, open:
-
-👉 http://localhost:8080/
-
-Select:
-
-Subject → Exam Type → Generate
-
-📁 Project Structure
-smartqpg/
- ├─ src/main/java/com/smartqp/smartqp/
- │   ├─ SmartqpApplication.java
- │   ├─ controller/QuestionPaperController.java
- │   ├─ service/QuestionPaperGeneratorService.java
- │   ├─ dao/QuestionDAO.java
- │   └─ model/Question.java
- │
- ├─ src/main/resources/static/index.html
- └─ src/main/resources/application.properties
-
-🛠 Future Enhancements
-
-🧩 Difficulty-based question selection (Easy/Medium/Hard)
-
-🛠 Admin UI to manage questions
-
-🧾 Export generated paper to PDF
-
-🔐 Teacher authentication system
-
-📚 Support for more subjects
-
-👩‍💻 Author
-
-Mizbataranumm
-
-📌 Smart Question Paper Generator — Built for VTU exam automation.
+```
+5 Modules × 2 Sets × 3 Parts (A,B,C) = 30 Questions
+```

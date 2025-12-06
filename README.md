@@ -94,3 +94,59 @@ Minimum recommended:
 ```
 5 Modules × 2 Sets × 3 Parts (A,B,C) = 30 Questions
 ```
+---
+
+## ▶️ Running the Application
+
+Start the app:
+
+```sh
+mvn spring-boot:run
+```
+
+Open in browser:
+
+👉 http://localhost:8080/
+
+Then select:
+
+```
+Subject → Exam Type → Generate
+```
+
+---
+
+## 📁 Project Structure
+
+```
+smartqpg/
+ ├─ src/main/java/com/smartqp/smartqp/
+ │   ├─ SmartqpApplication.java
+ │   ├─ controller/QuestionPaperController.java
+ │   ├─ service/QuestionPaperGeneratorService.java
+ │   ├─ dao/QuestionDAO.java
+ │   └─ model/Question.java
+ │
+ ├─ src/main/resources/static/index.html
+ └─ src/main/resources/application.properties
+```
+
+---
+
+## 🛠 Future Enhancements
+
+- 🧩 Difficulty-based question selection (Easy / Medium / Hard)  
+- 🛠 Admin UI for adding/editing questions  
+- 🧾 Export question paper as PDF  
+- 🔐 Authentication system for teachers  
+- 📚 Support for more subjects  
+
+---
+
+## 👩‍💻 Author
+
+**Mizbataranumm**
+
+📌 Smart Question Paper Generator — Built for VTU exam automation.
+
+---

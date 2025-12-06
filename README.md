@@ -1,49 +1,58 @@
-# Smart Question Paper Generator (SmartQPG)
+# 📄 Smart Question Paper Generator (SmartQPG)
 
-SmartQPG is a Spring Boot + MySQL based web application that automatically generates VTU‑style question papers for subjects like **SEPM** and **CN**.  
-It supports both **Internal (50 marks)** and **External (100 marks)** exams with proper module‑wise distribution.
+SmartQPG is a **Spring Boot + MySQL–based web application** that automatically generates VTU-style question papers for subjects like **SEPM** and **Computer Networks (CN)**.
 
----
+It supports:
 
-## Features
+- 🎓 **Internal Exam (50 Marks)**
+- 🏛 **External Exam (100 Marks)**
 
-- Generate **VTU‑style papers** for:
-  - Internal exam: 50 marks (Module 1 – 20, Module 2 – 20, Module 3 – 10)
-  - External exam: 100 marks (5 modules × 20 marks)
-- Module‑wise question selection:
-  - Each module has main questions (Q.1, Q.2, …) with sub‑parts A, B, C.
-  - Marks pattern per module: **7 + 8 + 5 = 20** (or 5 + 5 = 10 for internal module 3).
-- Randomized paper generation:
-  - For each module, one set is picked from the question bank so every generation can be different.
-- Clean, responsive UI:
-  - Select subject and exam type.
-  - View generated paper with total marks and question count.
-  - Print‑ready layout.
+with correct **module-wise marks distribution, randomized question selection**, and a clean print-ready output.
 
 ---
 
-## Tech Stack
+## 🚀 Features
 
-- **Backend:** Spring Boot, Java, JDBC
-- **Database:** MySQL
-- **Frontend:** HTML, CSS, Vanilla JavaScript
-- **Build Tool:** Maven
+- 📌 VTU-Style Question Paper Format
+- 📚 Internal Exam Distribution:
+  - Module 1 → 20 Marks  
+  - Module 2 → 20 Marks  
+  - Module 3 → 10 Marks  
+- 🧠 External Exam Format:
+  - **5 Modules × 20 Marks = 100 Marks**
+- 🧩 Module Design
+  - Each module contains **A, B, C** sub-questions  
+  - Pattern: **7 + 8 + 5 = 20**
+- 🔀 Random Set Selection (Set-1 or Set-2)
+- 🖨️ Print-Friendly UI
+- 📱 Responsive + Simple UI
 
 ---
 
-## Getting Started
+## 🛠️ Tech Stack
 
-### 1. Clone the repository
+| Layer | Technology |
+|-------|-----------|
+| Backend | Spring Boot (REST API), Java |
+| Frontend | HTML, CSS, JavaScript |
+| Database | MySQL |
+| Build Tool | Maven |
 
+---
 
+## 📦 Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```sh
 git clone https://github.com/Mizbataranumm/smartqpg.git
 cd smartqpg
 
-### 2. Configure MySQL
+2️⃣ Configure MySQL
 
-Create a database and update `application.properties`:
+Create a database named sqpg, then edit:
 
-
+📁 src/main/resources/application.properties:
 spring.datasource.url=jdbc:mysql://localhost:3306/sqpg
 spring.datasource.username=YOUR_USERNAME
 spring.datasource.password=YOUR_PASSWORD
@@ -51,55 +60,60 @@ spring.datasource.password=YOUR_PASSWORD
 spring.jpa.hibernate.ddl-auto=none
 spring.jpa.show-sql=true
 
-server.address=0.0.0.0
 server.port=8080
-Then open:
+server.address=0.0.0.0
 
-- `http://localhost:8080`
+🗃️ Required Database Table
 
-Choose **subject** and **exam type**, click **Generate Paper**, and the formatted question paper will be displayed with a print option.
+Your questions table must include:
+question_id
+subject_id
+chapter_id
+question_text
+difficulty
+marks
+question_type
+subject_code
+module_no
+part
+set_no
+Recommended minimum structure per subject:
+5 Modules × 2 Sets × 3 Parts (A, B, C) = 30 Questions
 
----
-
-Import your `questions` table with columns like:
-
-- `question_id`, `subject_id`, `chapter_id`
-- `question_text`, `difficulty`, `marks`, `question_type`
-- `subject_code`, `module_no`, `part`, `set_no`
-
-Ensure each subject has:
-
-- 5 modules × 2 sets × 3 parts (A,B,C) = **30 questions**.
-
----
-
-## Run the Application
-
+▶️ Running the Application
 mvn spring-boot:run
 
-## Project Structure
 
-- `src/main/java/com/smartqp/smartqp/`
-  - `SmartqpApplication.java` – Spring Boot entry point
-  - `controller/QuestionPaperController.java` – REST API `/api/papers/generate-exam-style`
-  - `service/QuestionPaperGeneratorService.java` – generation logic
-  - `dao/QuestionDAO.java` – DB access for questions
-  - `model/Question.java` – question entity
-- `src/main/resources/static/index.html` – frontend UI
-- `src/main/resources/application.properties` – configuration
+Then open browser:
 
----
+👉 http://localhost:8080/
 
-## Future Improvements
+Select Subject → Exam Type → Generate.
+smartqpg/
+ ├─ src/main/java/com/smartqp/smartqp/
+ │   ├─ SmartqpApplication.java
+ │   ├─ controller/QuestionPaperController.java
+ │   ├─ service/QuestionPaperGeneratorService.java
+ │   ├─ dao/QuestionDAO.java
+ │   └─ model/Question.java
+ │
+ ├─ src/main/resources/static/index.html
+ └─ src/main/resources/application.properties
+🛠 Future Enhancements
 
-- Add more subjects and flexible mark patterns.
-- Admin panel for adding/editing questions from UI.
-- Difficulty‑based distribution (easy/medium/hard sliders).
-- Export paper as PDF.
+🧩 Difficulty-based selection (Easy/Medium/Hard)
 
----
+🛠 Admin panel to add/edit questions
 
-## Author
+🧾 Export paper directly as PDF
 
-**Mizbataranumm**  
-Smart Question Paper Generator – VTU exam automation project.
+🔐 Authentication + Teacher Login
+
+📚 Support for more subjects
+👩‍💻 Author
+
+Mizbataranumm
+
+📌 A Smart Question Paper Generator for academic automation.
+
+

@@ -20,12 +20,12 @@ with correct **module-wise marks distribution, randomized question selection**, 
   - Module 3 → 10 Marks  
 - 🧠 External Exam Format:
   - **5 Modules × 20 Marks = 100 Marks**
-- 🧩 Module Design
+- 🧩 Question Format Structure:
   - Each module contains **A, B, C** sub-questions  
-  - Pattern: **7 + 8 + 5 = 20**
+  - Marks pattern → **7 + 8 + 5 = 20**
 - 🔀 Random Set Selection (Set-1 or Set-2)
-- 🖨️ Print-Friendly UI
-- 📱 Responsive + Simple UI
+- 🖨️ Print-Friendly Output
+- 📱 Responsive & Simple UI
 
 ---
 
@@ -52,10 +52,11 @@ cd smartqpg
 
 Create a database named sqpg, then edit:
 
-📁 src/main/resources/application.properties:
+📁 src/main/resources/application.properties
+
 spring.datasource.url=jdbc:mysql://localhost:3306/sqpg
-spring.datasource.username=Mizbataranumm
-spring.datasource.password=MiZba@0815
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
 
 spring.jpa.hibernate.ddl-auto=none
 spring.jpa.show-sql=true
@@ -63,9 +64,13 @@ spring.jpa.show-sql=true
 server.port=8080
 server.address=0.0.0.0
 
-🗃️ Required Database Table
+
+⚠️ Never commit real database passwords in public repositories.
+
+🗃️ Database Structure
 
 Your questions table must include:
+
 question_id
 subject_id
 chapter_id
@@ -77,18 +82,23 @@ subject_code
 module_no
 part
 set_no
-Recommended minimum structure per subject:
-5 Modules × 2 Sets × 3 Parts (A, B, C) = 30 Questions
 
-▶️ Running the Application
+
+Recommended minimum:
+
+1 Subject = 5 Modules × 2 Sets × 3 Parts (A, B, C) = 30 Questions
+
+▶️ Run the Application
 mvn spring-boot:run
 
 
-Then open browser:
+Then open in browser:
 
 👉 http://localhost:8080/
 
 Select Subject → Exam Type → Generate.
+
+📁 Project Structure
 smartqpg/
  ├─ src/main/java/com/smartqp/smartqp/
  │   ├─ SmartqpApplication.java
@@ -99,21 +109,22 @@ smartqpg/
  │
  ├─ src/main/resources/static/index.html
  └─ src/main/resources/application.properties
+
 🛠 Future Enhancements
 
 🧩 Difficulty-based selection (Easy/Medium/Hard)
 
-🛠 Admin panel to add/edit questions
+🛠 Admin panel to add / manage questions
 
-🧾 Export paper directly as PDF
+🧾 Export as downloadable PDF
 
-🔐 Authentication + Teacher Login
+🔐 Authentication (Faculty Login)
 
-📚 Support for more subjects
+📚 Add support for more subjects
+
 👩‍💻 Author
 
 Mizbataranumm
-
-📌 A Smart Question Paper Generator for academic automation.
+📌 Smart Question Paper Generator — Created for academic automation.
 
 

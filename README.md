@@ -48,7 +48,7 @@ with correct **module-wise marks distribution, randomized question selection**, 
 git clone https://github.com/Mizbataranumm/smartqpg.git
 cd smartqpg
 
-2️⃣ Configure MySQL
+### 1️⃣ Configure MySQL
 
 Create a database named sqpg, then edit:
 
@@ -67,7 +67,7 @@ server.address=0.0.0.0
 
 ⚠️ Never commit real database passwords in public repositories.
 
-🗃️ Database Structure
+###🗃️ Database Structure
 
 Your questions table must include:
 
@@ -88,7 +88,7 @@ Recommended minimum:
 
 1 Subject = 5 Modules × 2 Sets × 3 Parts (A, B, C) = 30 Questions
 
-▶️ Run the Application
+###▶️ Run the Application
 mvn spring-boot:run
 
 
@@ -98,7 +98,7 @@ Then open in browser:
 
 Select Subject → Exam Type → Generate.
 
-📁 Project Structure
+###📁 Project Structure
 smartqpg/
  ├─ src/main/java/com/smartqp/smartqp/
  │   ├─ SmartqpApplication.java
@@ -110,7 +110,7 @@ smartqpg/
  ├─ src/main/resources/static/index.html
  └─ src/main/resources/application.properties
 
-🛠 Future Enhancements
+###🛠 Future Enhancements
 
 🧩 Difficulty-based selection (Easy/Medium/Hard)
 
@@ -122,7 +122,7 @@ smartqpg/
 
 📚 Add support for more subjects
 
-👩‍💻 Author
+###👩‍💻 Author
 
 Mizbataranumm
 📌 Smart Question Paper Generator — Created for academic automation.

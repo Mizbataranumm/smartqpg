@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Question Paper Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+    .generator-page {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .nav-bar {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 16px 32px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .nav-title { font-size: 18px; font-weight: 600; color: #333; }
+    .container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+    }
+    .card h1 { font-size: 28px; margin-bottom: 10px; color: #333; }
+    .card-subtitle { color: #666; margin-bottom: 30px; font-size: 14px; }
+    .form-group { margin-bottom: 24px; }
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+      font-size: 14px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background: #f9f9f9;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    .difficulty-pills {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      flex: 1;
+      min-width: 80px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .pill-easy { background: #e8f5e9; color: #2e7d32; border-color: #4caf50; }
+    .pill-medium { background: #fff3e0; color: #e65100; border-color: #ff9800; }
+    .pill-hard { background: #ffebee; color: #c62828; border-color: #f44336; }
+    .pill-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .status-message {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: none;
+    }
+    .status-success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #4caf50;
+    }
+    .status-error {
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #f44336;
+    }
+    .paper-page {
+      display: none;
+      background: white;
+      min-height: 100vh;
+    }
+    .paper-header {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .paper-header h1 { font-size: 32px; margin-bottom: 10px; }
+    .paper-header p { font-size: 14px; opacity: 0.9; }
+    .paper-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 40px 20px;
+      background: white;
+    }
+    .paper-title { font-size: 24px; margin-bottom: 8px; color: #333; }
+    .paper-meta {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    .module-section { margin-bottom: 40px; }
+    .module-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #667eea;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #667eea;
+    }
+    .question-block {
+      margin-bottom: 12px;
+      padding: 16px;
+      background: white;
+      border-left: 4px solid #667eea;
+      border-radius: 4px;
+    }
+    .question-header {
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    .question-text {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .question-marks {
+      font-size: 12px;
+      color: #667eea;
+      font-weight: 600;
+    }
+    .paper-footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 2px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .total-marks {
+      font-size: 18px;
+      font-weight: 700;
+      color: #667eea;
+    }
+    .btn-back {
+      padding: 10px 20px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-back:hover { background: #764ba2; }
+    .btn-print {
+      padding: 10px 20px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-print:hover { background: #388e3c; }
+    .option-box {
+      margin-bottom: 24px;
+      padding: 16px;
+      background: #f0f4ff;
+      border-left: 4px solid #667eea;
+      border-radius: 4px;
+    }
+    .option-title {
+      font-weight: 700;
+      color: #667eea;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    .option-total {
+      text-align: right;
+      font-size: 12px;
+      color: #667eea;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+    @media print {
+      .paper-header, .paper-footer, .nav-bar { display: none; }
+      .paper-page { background: white; }
+    }
+    @media (max-width: 600px) {
+      .card { padding: 24px; }
+      .card h1 { font-size: 22px; }
+      .paper-footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <!-- GENERATOR PAGE -->
+  <div class="generator-page" id="generatorPage">
+    <div class="nav-bar">
+      <div class="nav-logo">📋</div>
+      <div class="nav-title">Smart Question Paper Generator</div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <h1>Generate Paper</h1>
+        <p class="card-subtitle">Select subject and exam type to generate your question paper</p>
+        <form onsubmit="generatePaper(event)">
+          <div class="form-group">
+            <label class="form-label">Subject *</label>
+            <select id="subjectId" class="form-control" required>
+              <option value="">-- Select Subject --</option>
+              <option value="3">SEPM (Software Engineering & PM)</option>
+              <option value="4">CN (Computer Networks)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Exam Type *</label>
+            <select id="examType" class="form-control" required>
+              <option value="">-- Select Exam Type --</option>
+              <option value="internal">Internal (50 marks)</option>
+              <option value="external">External (100 marks)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Difficulty Distribution</label>
+            <div class="difficulty-pills">
+              <div class="pill pill-easy">
+                <span class="pill-dot" style="background: #4caf50;"></span> Easy
+              </div>
+              <div class="pill pill-medium">
+                <span class="pill-dot" style="background: #ff9800;"></span> Medium
+              </div>
+              <div class="pill pill-hard">
+                <span class="pill-dot" style="background: #f44336;"></span> Hard
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">🚀 Generate Paper</button>
+          <div id="statusMessage" class="status-message"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAPER PAGE -->
+  <div class="paper-page" id="paperPage">
+    <div class="paper-header">
+      <h1>📄 Question Paper</h1>
+      <p id="paperSubject">Loading...</p>
+    </div>
+    <div class="paper-container">
+      <div class="paper-title" id="paperTitle">Question Paper</div>
+      <div class="paper-meta" id="paperMetaInfo">
+        Total Marks: <span id="totalMarksDisplay">0</span> | Questions: <span id="totalQuestionsDisplay">0</span>
+      </div>
+      <div id="papersContent"></div>
+      <div class="paper-footer">
+        <button class="btn-back" onclick="backToGenerator()">← Back</button>
+        <div class="total-marks">Total: <span id="finalTotalMarks">0</span> Marks</div>
+        <button class="btn-print" onclick="window.print()">🖨️ Print</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function generatePaper(e) {
+      e.preventDefault();
+      const subjectId = parseInt(document.getElementById("subjectId").value);
+      const examType = document.getElementById("examType").value;
+      const statusMsg = document.getElementById("statusMessage");
+
+      if (!subjectId || !examType) {
+        statusMsg.textContent = "❌ Please select both subject and exam type";
+        statusMsg.className = "status-message status-error";
+        statusMsg.style.display = "block";
+        return;
+      }
+
+      statusMsg.textContent = "⏳ Generating paper...";
+      statusMsg.className = "status-message status-success";
+      statusMsg.style.display = "block";
+
+      try {
+        let subjectCode = subjectId === 3 ? "SEPM" : "CN";
+        let examName = examType === "internal" ? "Internal Exam" : "External Exam";
+
+        const response = await fetch("/api/papers/generate-exam-style", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ subjectCode: subjectCode, examType: examType })
+        });
+
+        if (!response.ok) throw new Error("Failed to generate paper");
+
+        let questions = await response.json();
+        displayPaper(questions, subjectCode, examName);
+      } catch (error) {
+        statusMsg.textContent = "❌ Error: " + error.message;
+        statusMsg.className = "status-message status-error";
+        statusMsg.style.display = "block";
+      }
+    }
+
+    function displayPaper(questions, subjectCode, examName) {
+      const paperSubject = document.getElementById("paperSubject");
+      const paperTitle = document.getElementById("paperTitle");
+      const papersContent = document.getElementById("papersContent");
+      const totalMarksDisplay = document.getElementById("totalMarksDisplay");
+      const totalQuestionsDisplay = document.getElementById("totalQuestionsDisplay");
+      const finalTotalMarks = document.getElementById("finalTotalMarks");
+
+      paperSubject.textContent = subjectCode + " - " + examName;
+      paperTitle.textContent = subjectCode + " Question Paper - " + examName;
+
+      // Group questions by module and set
+      let moduleGroups = {};
+      questions.forEach(q => {
+        if (!moduleGroups[q.moduleNo]) {
+          moduleGroups[q.moduleNo] = {};
+        }
+        if (!moduleGroups[q.moduleNo][q.setNo]) {
+          moduleGroups[q.moduleNo][q.setNo] = [];
+        }
+        moduleGroups[q.moduleNo][q.setNo].push(q);
+      });
+
+     let totalMarks = 0;
+let totalQuestions = 0;
+let html = "";
+
+// question number counter: 1..5 (internal: 1..3)
+let qNumber = 1;
+
+let modules = Object.keys(moduleGroups).map(Number).sort((a, b) => a - b);
+
+modules.forEach(moduleNo => {
+  const sets = moduleGroups[moduleNo];
+  const setNumbers = Object.keys(sets).map(Number).sort((a, b) => a - b);
+
+  const setNo = setNumbers[0];
+  const setQuestions = sets[setNo];
+
+  html += `<div class="module-section">
+             <div class="module-title">QUESTION ${qNumber}</div>`;
+
+  let setMarks = 0;   // add this
+
+  setQuestions.forEach(q => {
+    setMarks += q.marks || 0;        // count marks for this QUESTION
+    totalMarks += q.marks || 0;
+    totalQuestions++;
+
+    html += `<div class="question-block">
+               <div class="question-header">
+                 Q.${qNumber}(${q.part.toUpperCase()}) [${q.marks} Marks]
+               </div>
+               <div class="question-text">${q.questionText}</div>
+               <div class="question-marks">Difficulty: ${q.difficulty}</div>
+             </div>`;
+  });
+
+  // show total marks for this QUESTION
+  html += `<div style="text-align:right;font-size:12px;color:#667eea;
+                      font-weight:600;margin-top:4px;">
+             Question Total: ${setMarks} marks
+           </div>`;
+
+  html += `</div>`;
+  qNumber++;
+});
+
+
+       
+      papersContent.innerHTML = html;
+      totalMarksDisplay.textContent = totalMarks;
+      totalQuestionsDisplay.textContent = totalQuestions;
+      finalTotalMarks.textContent = totalMarks;
+
+      // Switch to paper page
+      document.getElementById("generatorPage").style.display = "none";
+      document.getElementById("paperPage").style.display = "block";
+    }
+
+    function backToGenerator() {
+      document.getElementById("generatorPage").style.display = "flex";
+      document.getElementById("paperPage").style.display = "none";
+      document.getElementById("statusMessage").style.display = "none";
+    }
+  </script>
+</body>
+</html>

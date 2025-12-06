@@ -7,25 +7,25 @@ It supports:
 - 🎓 **Internal Exam (50 Marks)**
 - 🏛 **External Exam (100 Marks)**
 
-with correct **module-wise marks distribution, randomized question selection**, and a clean print-ready output.
+with correct **module-wise marks distribution, randomized question selection**, and a clean print-ready format.
 
 ---
 
 ## 🚀 Features
 
-- 📌 VTU-Style Question Paper Format
-- 📚 Internal Exam Distribution:
+- 📌 VTU-Style Question Paper Format  
+- 📚 Internal Exam Structure:
   - Module 1 → 20 Marks  
   - Module 2 → 20 Marks  
   - Module 3 → 10 Marks  
-- 🧠 External Exam Format:
+- 🧠 External Exam Structure:
   - **5 Modules × 20 Marks = 100 Marks**
-- 🧩 Question Format Structure:
-  - Each module contains **A, B, C** sub-questions  
+- 🧩 Format Pattern:
+  - Each module contains **A, B, C** subquestions
   - Marks pattern → **7 + 8 + 5 = 20**
-- 🔀 Random Set Selection (Set-1 or Set-2)
-- 🖨️ Print-Friendly Output
-- 📱 Responsive & Simple UI
+- 🔀 Random Set Selection (Set-1 / Set-2)
+- 🖨 Print Friendly Output
+- 📱 Responsive & Easy-to-Use UI
 
 ---
 
@@ -47,13 +47,15 @@ with correct **module-wise marks distribution, randomized question selection**, 
 ```sh
 git clone https://github.com/Mizbataranumm/smartqpg.git
 cd smartqpg
+---
 
-### 1️⃣ Configure MySQL
+### 2️⃣ Configure MySQL
 
-Create a database named sqpg, then edit:
+Create a database named `sqpg`, then edit:
 
-📁 src/main/resources/application.properties
+📄 `src/main/resources/application.properties`
 
+```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/sqpg
 spring.datasource.username=YOUR_USERNAME
 spring.datasource.password=YOUR_PASSWORD
@@ -63,42 +65,43 @@ spring.jpa.show-sql=true
 
 server.port=8080
 server.address=0.0.0.0
+🗃️ Database Requirements
+
+Your questions table must include the following columns:
+
+question_id  
+subject_id  
+chapter_id  
+question_text  
+difficulty  
+marks  
+question_type  
+subject_code  
+module_no  
+part  
+set_no  
 
 
-⚠️ Never commit real database passwords in public repositories.
+Minimum recommended question count per subject:
 
-###🗃️ Database Structure
+5 modules × 2 sets × 3 parts (A, B, C) = 30 questions
 
-Your questions table must include:
+▶️ Running the Application
 
-question_id
-subject_id
-chapter_id
-question_text
-difficulty
-marks
-question_type
-subject_code
-module_no
-part
-set_no
+Start the Spring Boot server using:
 
-
-Recommended minimum:
-
-1 Subject = 5 Modules × 2 Sets × 3 Parts (A, B, C) = 30 Questions
-
-###▶️ Run the Application
 mvn spring-boot:run
 
 
-Then open in browser:
+Once the application is running, open:
 
 👉 http://localhost:8080/
 
-Select Subject → Exam Type → Generate.
+Select:
 
-###📁 Project Structure
+Subject → Exam Type → Generate
+
+📁 Project Structure
 smartqpg/
  ├─ src/main/java/com/smartqp/smartqp/
  │   ├─ SmartqpApplication.java
@@ -110,21 +113,20 @@ smartqpg/
  ├─ src/main/resources/static/index.html
  └─ src/main/resources/application.properties
 
-###🛠 Future Enhancements
+🛠 Future Enhancements
 
-🧩 Difficulty-based selection (Easy/Medium/Hard)
+🧩 Difficulty-based question selection (Easy/Medium/Hard)
 
-🛠 Admin panel to add / manage questions
+🛠 Admin UI to manage questions
 
-🧾 Export as downloadable PDF
+🧾 Export generated paper to PDF
 
-🔐 Authentication (Faculty Login)
+🔐 Teacher authentication system
 
-📚 Add support for more subjects
+📚 Support for more subjects
 
-###👩‍💻 Author
+👩‍💻 Author
 
 Mizbataranumm
-📌 Smart Question Paper Generator — Created for academic automation.
 
-
+📌 Smart Question Paper Generator — Built for VTU exam automation.
